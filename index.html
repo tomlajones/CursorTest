@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PulpTetris</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand" aria-label="PulpTetris">
+          <span class="brandMark" aria-hidden="true"></span>
+          <h1>PulpTetris</h1>
+        </div>
+        <div class="topbarRight">
+          <button id="startStop" class="btn primary" type="button">Start</button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="boardPanel">
+          <div id="boardWrap" class="boardWrap">
+            <canvas id="gameCanvas" aria-label="Tetris game board"></canvas>
+
+            <div id="overlay" class="overlay hidden" aria-live="polite">
+              <div class="overlayCard">
+                <h2 id="overlayTitle">Press Start</h2>
+                <p id="overlaySubtitle">Clear lines to advance levels.</p>
+                <button id="overlayAction" class="btn primary" type="button">Start</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="hudPanel">
+          <div class="hudCard">
+            <div class="hudRow">
+              <div class="hudLabel">Score</div>
+              <div class="hudValue" id="scoreValue">0</div>
+            </div>
+            <div class="hudRow">
+              <div class="hudLabel">Level</div>
+              <div class="hudValue" id="levelValue">1</div>
+            </div>
+            <div class="hudRow">
+              <div class="hudLabel">Lines</div>
+              <div class="hudValue" id="linesValue">0</div>
+            </div>
+          </div>
+
+          <div class="optionsCard">
+            <label class="optionsLabel" for="linesPerLevel">Lines per level</label>
+            <select id="linesPerLevel" class="select">
+              <option value="10" selected>10 (classic)</option>
+              <option value="5">5</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+            <div class="hint">Clearing more lines speeds up gravity.</div>
+          </div>
+
+          <div class="nextCard">
+            <div class="nextTitle">Next block</div>
+            <canvas id="nextCanvas" aria-label="Next block preview"></canvas>
+          </div>
+
+          <div class="controlsCard">
+            <div class="controlsTitle">Controls</div>
+            <div class="controlsText">
+              <div><kbd>←</kbd>/<kbd>→</kbd> move</div>
+              <div><kbd>↓</kbd> soft drop</div>
+              <div><kbd>↑</kbd>/<kbd>X</kbd> rotate</div>
+              <div><kbd>Z</kbd> rotate CCW</div>
+              <div><kbd>Space</kbd> hard drop</div>
+              <div><kbd>Start/Stop</kbd> pause/resume</div>
+            </div>
+          </div>
+        </aside>
+      </main>
+
+      <div class="footerNote">
+        Canvas-based Tetris inspired by 90s crime-film aesthetics (no media assets).
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

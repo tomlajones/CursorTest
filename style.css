@@ -1,0 +1,336 @@
+/* PulpTetris styling: cinematic, high-contrast, full-viewport. */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #050507;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Warm cinematic background + film grain + scanlines (no external assets). */
+.app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(255, 160, 90, 0.16), transparent 55%),
+    radial-gradient(900px 600px at 85% 20%, rgba(180, 75, 255, 0.12), transparent 60%),
+    linear-gradient(180deg, rgba(8, 8, 12, 0.95), rgba(0, 0, 0, 0.95));
+  z-index: -2;
+}
+
+.app::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08) 0px,
+      rgba(255, 255, 255, 0.08) 1px,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0) 4px
+    ),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.35'/></svg>");
+  animation: filmJitter 2.5s steps(12) infinite;
+}
+
+@keyframes filmJitter {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    transform: translate3d(-1px, 1px, 0);
+  }
+  40% {
+    transform: translate3d(1px, -1px, 0);
+  }
+  60% {
+    transform: translate3d(-1px, -1px, 0);
+  }
+  80% {
+    transform: translate3d(1px, 1px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brandMark {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, rgba(255, 196, 130, 0.95), rgba(255, 120, 120, 0.75));
+  box-shadow:
+    0 0 18px rgba(255, 165, 90, 0.4),
+    0 0 32px rgba(200, 60, 255, 0.25);
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: clamp(20px, 4vw, 34px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 360px);
+  gap: 16px;
+  padding: 0 18px 18px;
+  align-items: stretch;
+}
+
+.boardPanel {
+  min-width: 0;
+  display: flex;
+}
+
+.boardWrap {
+  position: relative;
+  flex: 1;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boardWrap canvas {
+  display: block;
+}
+
+.hudPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.hudCard,
+.optionsCard,
+.nextCard,
+.controlsCard {
+  background: rgba(10, 10, 16, 0.55);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px;
+  backdrop-filter: blur(6px);
+}
+
+.hudCard {
+  flex: 0 0 auto;
+}
+
+.hudRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.hudRow:last-child {
+  border-bottom: none;
+}
+
+.hudLabel {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hudValue {
+  font-size: 24px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.optionsLabel {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+
+.select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+.hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.35;
+}
+
+.nextCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 auto;
+}
+
+.nextTitle,
+.controlsTitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+#nextCanvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.controlsText {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+}
+
+.controlsText kbd {
+  font-family: inherit;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.btn {
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn.primary {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 186, 120, 0.55),
+    rgba(255, 120, 120, 0.2)
+  );
+  box-shadow:
+    0 0 0 1px rgba(255, 170, 90, 0.22) inset,
+    0 10px 30px rgba(255, 130, 80, 0.12);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.footerNote {
+  padding: 0 18px 18px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlayCard {
+  width: min(420px, 92%);
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(15, 15, 22, 0.6);
+  text-align: center;
+}
+
+.overlayCard h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.overlayCard p {
+  margin: 0 0 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow: auto;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .nextCard {
+    flex: 0 0 auto;
+  }
+}
